@@ -1,0 +1,9 @@
+<layout id="SensorLayout">
+    <label id="humidity" x="center" y="40" color="Graphics.COLOR_LT_GRAY" justification="Graphics.TEXT_JUSTIFY_CENTER" font="Graphics.FONT_SMALL" />
+    <label id="temperature" x="center" y="60" color="Graphics.COLOR_LT_GRAY" justification="Graphics.TEXT_JUSTIFY_CENTER" font="Graphics.FONT_SMALL" />
+    <label id="pressure" x="center" y="80" color="Graphics.COLOR_LT_GRAY" justification="Graphics.TEXT_JUSTIFY_CENTER" font="Graphics.FONT_SMALL" />
+    <label id="acceleration" x="center" y="100" color="Graphics.COLOR_LT_GRAY" justification="Graphics.TEXT_JUSTIFY_CENTER" font="Graphics.FONT_SMALL" />
+    <label id="voltage" x="center" y="120" color="Graphics.COLOR_LT_GRAY" justification="Graphics.TEXT_JUSTIFY_CENTER" font="Graphics.FONT_SMALL" />
+    <label id="rssi" x="center" y="140" color="Graphics.COLOR_LT_GRAY" justification="Graphics.TEXT_JUSTIFY_CENTER" font="Graphics.FONT_SMALL" />
+    <label id="latency" x="center" y="160" color="Graphics.COLOR_LT_GRAY" justification="Graphics.TEXT_JUSTIFY_CENTER" font="Graphics.FONT_SMALL" />
+</layout>

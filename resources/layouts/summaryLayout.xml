@@ -1,0 +1,4 @@
+<layout id="SummaryLayout">
+    <label id="label" x="center" y="20%" color="Graphics.COLOR_LT_GRAY" justification="Graphics.TEXT_JUSTIFY_CENTER" font="Graphics.FONT_SMALL" text="Scanning..." />
+    <label id="sensorCount" x="center" y="center" color="Graphics.COLOR_LT_GRAY" justification="Graphics.TEXT_JUSTIFY_CENTER" font="Graphics.FONT_LARGE" text="" />
+</layout>
