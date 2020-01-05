@@ -1,4 +1,6 @@
 using Toybox.Application;
+using Toybox.Lang;
+using Toybox.Timer;
 using Toybox.WatchUi;
 
 class RuuviTagApp extends Application.AppBase {
@@ -6,6 +8,7 @@ class RuuviTagApp extends Application.AppBase {
 	private var index_ = 0;
 	private var sensorViews_ = [];
 	private var summaryView_ = new RuuviTagSummaryView(); 
+	private var refreshTimer_ = new Timer.Timer();
 
 	// Signal sources.
 	private var bleDelegate_ =
@@ -19,6 +22,7 @@ class RuuviTagApp extends Application.AppBase {
 
 	function onStart(state) {
 		bleDelegate_.startScanning();
+		refreshTimer_.start(new Lang.Method(WatchUi, :requestUpdate), 250, true);
     }
 
     function getInitialView() {
@@ -77,12 +81,16 @@ class RuuviTagApp extends Application.AppBase {
     }
     
 	function onRuuviTagData(address, data) {
+		var firstSensor = sensorViews_.size() == 0;
 		if (!addressIndexMap_.hasKey(address)) {
 			sensorViews_.add(new RuuviTagSensorView());
 			addressIndexMap_[address] = sensorViews_.size() - 1;
-			summaryView_.setSensorCount(sensorViews_.size());
+			summaryView_.setContent(sensorViews_.size());
 		}
-		sensorViews_[addressIndexMap_[address]].setData(data);
+		sensorViews_[addressIndexMap_[address]].setContent(data, sensorViews_.size() > 1);
 		WatchUi.requestUpdate();
+		if (firstSensor) {
+			onSummarySelect();
+		}
 	}
 }

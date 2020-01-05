@@ -2,6 +2,7 @@ using Toybox.WatchUi;
 
 class RuuviTagSummaryView extends WatchUi.View {
 
+	private var labelFound = WatchUi.loadResource(Rez.Strings.Found);
 	private var sensorCount_ = 0;
 
     function initialize() {
@@ -14,10 +15,11 @@ class RuuviTagSummaryView extends WatchUi.View {
 
     function onUpdate(dc) {
         View.onUpdate(dc);
-        View.findDrawableById("sensorCount").setText(sensorCount_ + " found");
+		View.findDrawableById("sensorCount")
+			.setText(sensorCount_ + " " + labelFound);
     }
     
-    function setSensorCount(sensorCount) {
+    function setContent(sensorCount) {
     	sensorCount_ = sensorCount;
     }
 }

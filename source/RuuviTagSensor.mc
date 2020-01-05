@@ -1,12 +1,12 @@
-using Toybox.Lang;
-using Toybox.Timer;
 using Toybox.WatchUi;
 
 class RuuviTagSensorView extends WatchUi.View {
 
+	private var labelSecondsAgo = WatchUi.loadResource(Rez.Strings.SecondsAgo);
+
 	private var data_ = null;
+	private var showNextPageArrow_ = false;
 	private var lastUpdated_ = null;
-	private var timer_ = new Timer.Timer();
 
     function initialize() {
         View.initialize();
@@ -47,11 +47,25 @@ class RuuviTagSensorView extends WatchUi.View {
 		if (lastUpdated_ == null) {
 			return "";
 		}
-		return Time.now().compare(lastUpdated_).format("%d") + " s ago";
+		return Time.now().compare(lastUpdated_).format("%d") + " " + labelSecondsAgo;
+	}
+
+	private function drawNextPageArrow(dc) {
+		var xCenter = dc.getWidth() / 2;
+		var yBottom = dc.getHeight();
+		dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_LT_GRAY);
+		dc.fillPolygon([
+			[xCenter - 7, yBottom - 8],
+			[xCenter, yBottom - 1],
+			[xCenter + 7,  yBottom - 8]
+		]);
 	}
 
     function onUpdate(dc) {
         View.onUpdate(dc);
+        if (data_.hasKey(:macAddress)) {
+			View.findDrawableById("address").setText(data_[:macAddress]);
+        }
 		View.findDrawableById("humidity").setText(
 			getHumidityLabelText(data_[:humidityPercent]));
 		View.findDrawableById("temperature").setText(
@@ -65,15 +79,14 @@ class RuuviTagSensorView extends WatchUi.View {
 		View.findDrawableById("rssi").setText(
 			getRssiLabelText(data_[:rssiDbm]));
 		View.findDrawableById("latency").setText(getLatencyLabelText());
-		timer_.start(new Lang.Method(WatchUi, :requestUpdate), 100, false);
+		if (showNextPageArrow_) {
+			drawNextPageArrow(dc);
+		}
     }
     
-    function onHide() {
-    	timer_.stop();
-    }
-    
-	function setData(data) {
+	function setContent(data, showNextPageArrow) {
 		data_ = data;
+		showNextPageArrow_ = showNextPageArrow;
 		lastUpdated_ = Time.now();
 	}
 }
