@@ -1,0 +1,8 @@
+<resources>
+	<strings>
+	    <string id="AppName">RuuviTag</string>
+	    <string id="Scanning">Scanning...</string>
+	    <string id="Found">found</string>
+	    <string id="SecondsAgo">s ago</string>
+	</strings>
+</resources>
