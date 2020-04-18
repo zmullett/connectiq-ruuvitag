@@ -4,34 +4,44 @@ using Toybox.Timer;
 using Toybox.WatchUi;
 
 class RuuviTagApp extends Application.AppBase {
-	private var addressIndexMap_ = {};
+	// Declare, but do not initialize anything here, to prevent errors when in
+	// glance mode.
+	private var addressIndexMap_;
 	private var index_ = 0;
-	private var sensorViews_ = [];
-	private var summaryView_ = new RuuviTagSummaryView(); 
-	private var refreshTimer_ = new Timer.Timer();
-
-	// Signal sources.
-	private var bleDelegate_ =
-		new RuuviTagBleDelegate(method(:onRuuviTagData));
-	(:debug) private var fakeBleDelegate_ =
-		new FakeRuuviTagBleDelegate(method(:onRuuviTagData));
+	private var sensorViews_;
+	private var summaryView_; 
+	private var refreshTimer_;
+	private var bleDelegate_;
 
     function initialize() {
         AppBase.initialize();
     }
 
-	function onStart(state) {
-		bleDelegate_.startScanning();
-		refreshTimer_.start(new Lang.Method(WatchUi, :requestUpdate), 250, true);
-    }
+	(:debug)
+	private function createBleDelegate() {
+		bleDelegate_ = new FakeRuuviTagBleDelegate(method(:onRuuviTagData));
+	}
+	
+	(:release)
+	private function createBleDelegate() {
+		bleDelegate_ = new RuuviTagBleDelegate(method(:onRuuviTagData));
+	}
 
     function getInitialView() {
+		addressIndexMap_ = {};
+		sensorViews_ = [];
+		summaryView_ = new RuuviTagSummaryView();
+		refreshTimer_ = new Timer.Timer();
+		refreshTimer_.start(
+			new Lang.Method(WatchUi, :requestUpdate), 250, true);
+		createBleDelegate();
+
         return [
         	summaryView_,
         	new RuuviTagSummaryBehaviorDelegate(method(:onSummarySelect))
         ];
     }
-    
+
     private function createSensorBehaviorDelegate() {
     	return new RuuviTagSensorBehaviorDelegate(
     		method(:onSensorNextPage),

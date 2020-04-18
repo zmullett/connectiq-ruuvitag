@@ -108,9 +108,6 @@ class RuuviTagBleDelegate extends BluetoothLowEnergy.BleDelegate {
 		BluetoothLowEnergy.setDelegate(self);
 		callback_ = callback;
 		comparableScanResults_ = [];
-	}
-	
-	function startScanning() {
 		BluetoothLowEnergy.setScanState(BluetoothLowEnergy.SCAN_STATE_SCANNING);
 	}
 
