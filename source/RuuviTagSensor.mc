@@ -5,6 +5,7 @@ class RuuviTagSensorView extends WatchUi.View {
   private var labelSecondsAgo = WatchUi.loadResource(Rez.Strings.SecondsAgo);
 
   private var data_ = null;
+  private var sensorAliases_ = null;
   private var showNextPageArrow_ = false;
   private var lastUpdated_ = null;
 
@@ -61,10 +62,14 @@ class RuuviTagSensorView extends WatchUi.View {
     ]);
   }
 
+  private function getSensorAlias(macAddress) {
+    return (sensorAliases_[macAddress]) ? sensorAliases_[macAddress] : macAddress;
+  }
+
   function onUpdate(dc) {
     View.onUpdate(dc);
     if (data_.hasKey(:macAddress)) {
-      View.findDrawableById("address").setText(data_[:macAddress]);
+      View.findDrawableById("address").setText(getSensorAlias(data_[:macAddress]));
     }
     View.findDrawableById("humidity").setText(
       getHumidityLabelText(data_[:humidityPercent]));
@@ -84,8 +89,9 @@ class RuuviTagSensorView extends WatchUi.View {
     }
   }
 
-  function setContent(data, showNextPageArrow) {
+  function setContent(data, sensorAliases, showNextPageArrow) {
     data_ = data;
+    sensorAliases_ = sensorAliases;
     showNextPageArrow_ = showNextPageArrow;
     lastUpdated_ = Time.now();
   }
