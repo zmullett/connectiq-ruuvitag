@@ -12,6 +12,7 @@ class RuuviTagApp extends Application.AppBase {
   private var summaryView_;
   private var refreshTimer_;
   private var bleDelegate_;
+  private var sensorAliases_ = {};
 
   function initialize() {
     AppBase.initialize();
@@ -25,6 +26,39 @@ class RuuviTagApp extends Application.AppBase {
   (:release)
   private function createBleDelegate() {
     bleDelegate_ = new RuuviTagBleDelegate(method(:onRuuviTagData));
+  }
+
+  private function verifySensorProperty (sensorMacAddress, sensorAlias) {
+    var sensorMacAddressCA = sensorMacAddress.toCharArray();
+
+    // verify if format of user-configurable hardware address is reasonable
+    if ((sensorMacAddress.length() == 14) && 
+        (sensorMacAddressCA[2] ==
+         sensorMacAddressCA[5] ==
+         sensorMacAddressCA[8] ==
+         sensorMacAddressCA[11] == ':')) {
+        return true;
+      }
+    return false;
+  }
+
+  function onStart(state) {
+    for (var i = 1; i < 6; i++) {
+      var sensor = "sensor-" + i.format("%02d");
+      var sensorMacAddress;
+      var sensorAlias;
+
+      try {
+        sensorMacAddress = Application.Properties.getValue(sensor + "-mac-address");
+        sensorAlias = Application.Properties.getValue(sensor + "-alias");
+
+        if (verifySensorProperty(sensorMacAddress, sensorAlias)) {
+          sensorAliases_[sensorMacAddress.toUpper()] = sensorAlias;
+        }
+      }
+      catch(ex) {
+      }
+    }
   }
 
   function getInitialView() {
@@ -98,7 +132,7 @@ class RuuviTagApp extends Application.AppBase {
       summaryView_.setContent(sensorViews_.size());
     }
     sensorViews_[addressIndexMap_[address]].setContent(
-      data, sensorViews_.size() > 1);
+      data, sensorAliases_, sensorViews_.size() > 1);
     WatchUi.requestUpdate();
     if (firstSensor) {
       onSummarySelect();
