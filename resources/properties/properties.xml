@@ -1,0 +1,16 @@
+<resources>
+
+<properties>
+  <property id="sensor-01-mac-address" type="string"></property>
+  <property id="sensor-01-alias" type="string"></property>
+  <property id="sensor-02-mac-address" type="string"></property>
+  <property id="sensor-02-alias" type="string"></property>
+  <property id="sensor-03-mac-address" type="string"></property>
+  <property id="sensor-03-alias" type="string"></property>
+  <property id="sensor-04-mac-address" type="string"></property>
+  <property id="sensor-04-alias" type="string"></property>
+  <property id="sensor-05-mac-address" type="string"></property>
+  <property id="sensor-05-alias" type="string"></property>
+</properties>
+
+</resources>
