@@ -43,6 +43,11 @@ class RuuviTagApp extends Application.AppBase {
         }
       }
       catch(ex) {
+        /* When Application.Properties.getValue() throws an exception, the
+         * widget will work - just without displaying sensor aliases. Handle
+         * such exceptions as a warning and not as an error and, thus don't
+         * crash the widget.
+         */
       }
     }
   }
