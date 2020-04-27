@@ -62,14 +62,14 @@ class RuuviTagSensorView extends WatchUi.View {
     ]);
   }
 
-  private function getSensorAlias(macAddress) {
+  private function getSensorDisplayName(macAddress) {
     return (sensorAliases_[macAddress]) ? sensorAliases_[macAddress] : macAddress;
   }
 
   function onUpdate(dc) {
     View.onUpdate(dc);
     if (data_.hasKey(:macAddress)) {
-      View.findDrawableById("address").setText(getSensorAlias(data_[:macAddress]));
+      View.findDrawableById("address").setText(getSensorDisplayName(data_[:macAddress]));
     }
     View.findDrawableById("humidity").setText(
       getHumidityLabelText(data_[:humidityPercent]));
