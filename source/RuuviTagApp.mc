@@ -28,20 +28,6 @@ class RuuviTagApp extends Application.AppBase {
     bleDelegate_ = new RuuviTagBleDelegate(method(:onRuuviTagData));
   }
 
-  private function verifySensorProperty (sensorMacAddress, sensorAlias) {
-    var sensorMacAddressCA = sensorMacAddress.toCharArray();
-
-    // verify if format of user-configurable hardware address is reasonable
-    if ((sensorMacAddress.length() == 14) && 
-        (sensorMacAddressCA[2] ==
-         sensorMacAddressCA[5] ==
-         sensorMacAddressCA[8] ==
-         sensorMacAddressCA[11] == ':')) {
-        return true;
-      }
-    return false;
-  }
-
   function onStart(state) {
     for (var i = 1; i < 6; i++) {
       var sensor = "sensor-" + i.format("%02d");
@@ -52,7 +38,7 @@ class RuuviTagApp extends Application.AppBase {
         sensorMacAddress = Application.Properties.getValue(sensor + "-mac-address");
         sensorAlias = Application.Properties.getValue(sensor + "-alias");
 
-        if (verifySensorProperty(sensorMacAddress, sensorAlias)) {
+        if (sensorMacAddress.length() > 0 && sensorAlias.length() > 0) {
           sensorAliases_[sensorMacAddress.toUpper()] = sensorAlias;
         }
       }
