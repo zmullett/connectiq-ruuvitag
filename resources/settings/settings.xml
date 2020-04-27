@@ -1,0 +1,42 @@
+<resources>
+
+<settings>
+
+  <setting propertyKey="@Properties.sensor-01-mac-address" title="@Strings.Sensor01macAddress_title">
+  <settingConfig type="alphaNumeric" />
+  </setting>
+  <setting propertyKey="@Properties.sensor-01-alias" title="@Strings.Sensor01alias_title">
+  <settingConfig type="alphaNumeric" />
+  </setting>
+
+  <setting propertyKey="@Properties.sensor-02-mac-address" title="@Strings.Sensor02macAddress_title">
+  <settingConfig type="alphaNumeric" />
+  </setting>
+  <setting propertyKey="@Properties.sensor-02-alias" title="@Strings.Sensor02alias_title">
+  <settingConfig type="alphaNumeric" />
+  </setting>
+
+  <setting propertyKey="@Properties.sensor-03-mac-address" title="@Strings.Sensor03macAddress_title">
+  <settingConfig type="alphaNumeric" />
+  </setting>
+  <setting propertyKey="@Properties.sensor-03-alias" title="@Strings.Sensor03alias_title">
+  <settingConfig type="alphaNumeric" />
+  </setting>
+
+  <setting propertyKey="@Properties.sensor-04-mac-address" title="@Strings.Sensor04macAddress_title">
+  <settingConfig type="alphaNumeric" />
+  </setting>
+  <setting propertyKey="@Properties.sensor-04-alias" title="@Strings.Sensor04alias_title">
+  <settingConfig type="alphaNumeric" />
+  </setting>
+
+  <setting propertyKey="@Properties.sensor-05-mac-address" title="@Strings.Sensor05macAddress_title">
+  <settingConfig type="alphaNumeric" />
+  </setting>
+  <setting propertyKey="@Properties.sensor-05-alias" title="@Strings.Sensor05alias_title">
+  <settingConfig type="alphaNumeric" />
+  </setting>
+
+</settings>
+
+</resources>

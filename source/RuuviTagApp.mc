@@ -12,6 +12,7 @@ class RuuviTagApp extends Application.AppBase {
   private var summaryView_;
   private var refreshTimer_;
   private var bleDelegate_;
+  private var sensorAliases_ = {};
 
   function initialize() {
     AppBase.initialize();
@@ -25,6 +26,35 @@ class RuuviTagApp extends Application.AppBase {
   (:release)
   private function createBleDelegate() {
     bleDelegate_ = new RuuviTagBleDelegate(method(:onRuuviTagData));
+  }
+
+  private function readProperties() {
+    for (var i = 0; i < 5; i++) {
+      var sensorIndex = i + 1;
+      var sensor = "sensor-" + sensorIndex.format("%02d");
+      var sensorMacAddress;
+      var sensorAlias;
+
+      try {
+        sensorMacAddress = Application.Properties.getValue(sensor + "-mac-address");
+        sensorAlias = Application.Properties.getValue(sensor + "-alias");
+
+        if (sensorMacAddress.length() > 0 && sensorAlias.length() > 0) {
+          sensorAliases_[sensorMacAddress.toUpper()] = sensorAlias;
+        }
+      }
+      catch(ex) {
+        /* When Application.Properties.getValue() throws an exception, the
+         * widget will work - just without displaying sensor aliases. Handle
+         * such exceptions as a warning and not as an error and, thus don't
+         * crash the widget.
+         */
+      }
+    }
+  }
+
+  function onStart(state) {
+    readProperties();
   }
 
   function getInitialView() {
@@ -98,7 +128,7 @@ class RuuviTagApp extends Application.AppBase {
       summaryView_.setContent(sensorViews_.size());
     }
     sensorViews_[addressIndexMap_[address]].setContent(
-      data, sensorViews_.size() > 1);
+      data, sensorAliases_, sensorViews_.size() > 1);
     WatchUi.requestUpdate();
     if (firstSensor) {
       onSummarySelect();

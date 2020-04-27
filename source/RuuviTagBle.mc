@@ -159,6 +159,10 @@ class RuuviTagBleDelegate extends BluetoothLowEnergy.BleDelegate {
 
   function initialize(callback) {
     callback_ = callback;
+    
+    Application.Properties.setValue("sensor-01-mac-address", "CO:FF:EE:47:11");
+    Application.Properties.setValue("sensor-01-alias", "Kitchen");
+    
     timers_ = [
       createInterval(:notifyTag1, 1000),
       createInterval(:notifyTag2, 2100)
@@ -203,6 +207,23 @@ class RuuviTagBleDelegate extends BluetoothLowEnergy.BleDelegate {
       :movementCounter => 1,
       :measurementSequenceNumber => measurementSequenceNumber_,
       :macAddress => "01:02:03:04:05",
+    });
+
+    callback_.invoke("fake3", {
+      :rssiDbm => Math.rand() % 10 - 80,
+      :humidityPercent => (Math.rand() % 20) / 10f + 40f,
+      :temperatureDegC => (Math.rand() % 50) / 10f + 20f,
+      :pressurePa => -(Math.rand() % 1000) + 90000,
+      :accelerationMilliG => {
+        :x => 707,
+        :y => -707,
+        :z => 0,
+      },
+      :batteryMilliVolts => 2700,
+      :transmitPowerDbm => 3,
+      :movementCounter => 1,
+      :measurementSequenceNumber => measurementSequenceNumber_,
+      :macAddress => "CO:FF:EE:47:11",
     });
   }
 }

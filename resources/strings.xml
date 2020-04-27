@@ -4,5 +4,15 @@
 	    <string id="Scanning">Scanning...</string>
 	    <string id="Found">found</string>
 	    <string id="SecondsAgo">s ago</string>
+	    <string id="Sensor01macAddress_title">Sensor 1 Hardware Address</string>
+	    <string id="Sensor01alias_title">Sensor 1 Alias</string>
+	    <string id="Sensor02macAddress_title">Sensor 2 Hardware Address</string>
+	    <string id="Sensor02alias_title">Sensor 2 Alias</string>
+	    <string id="Sensor03macAddress_title">Sensor 3 Hardware Address</string>
+	    <string id="Sensor03alias_title">Sensor 3 Alias</string>
+	    <string id="Sensor04macAddress_title">Sensor 4 Hardware Address</string>
+	    <string id="Sensor04alias_title">Sensor 4 Alias</string>
+	    <string id="Sensor05macAddress_title">Sensor 5 Hardware Address</string>
+	    <string id="Sensor05alias_title">Sensor 5 Alias</string>
 	</strings>
 </resources>
