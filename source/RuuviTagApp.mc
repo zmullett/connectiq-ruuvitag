@@ -28,9 +28,10 @@ class RuuviTagApp extends Application.AppBase {
     bleDelegate_ = new RuuviTagBleDelegate(method(:onRuuviTagData));
   }
 
-  function onStart(state) {
-    for (var i = 1; i < 6; i++) {
-      var sensor = "sensor-" + i.format("%02d");
+  private function readProperties() {
+    for (var i = 0; i < 5; i++) {
+      var sensorIndex = i + 1;
+      var sensor = "sensor-" + sensorIndex.format("%02d");
       var sensorMacAddress;
       var sensorAlias;
 
@@ -50,6 +51,10 @@ class RuuviTagApp extends Application.AppBase {
          */
       }
     }
+  }
+
+  function onStart(state) {
+    readProperties();
   }
 
   function getInitialView() {
