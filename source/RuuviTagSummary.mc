@@ -15,8 +15,8 @@ class RuuviTagSummaryView extends WatchUi.View {
 
   function onUpdate(dc) {
     View.onUpdate(dc);
-    View.findDrawableById("sensorCount")
-      .setText(sensorCount_ + " " + labelFound);
+    var sensorCountView = View.findDrawableById("sensorCount") as WatchUi.Text;
+    sensorCountView.setText(sensorCount_ + " " + labelFound);
   }
 
   function setContent(sensorCount) {

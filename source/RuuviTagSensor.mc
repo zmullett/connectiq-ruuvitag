@@ -1,10 +1,11 @@
-using Toybox.WatchUi;
+import Toybox.Lang;
+import Toybox.WatchUi;
 
 class RuuviTagSensorView extends WatchUi.View {
 
   private var labelSecondsAgo = WatchUi.loadResource(Rez.Strings.SecondsAgo);
 
-  private var data_ = null;
+  private var data_ as Dictionary<Symbol, Number> or Null = null;
   private var sensorAliases_ = null;
   private var showNextPageArrow_ = false;
   private var lastUpdated_ = null;
@@ -68,22 +69,33 @@ class RuuviTagSensorView extends WatchUi.View {
 
   function onUpdate(dc) {
     View.onUpdate(dc);
+
     if (data_.hasKey(:macAddress)) {
-      View.findDrawableById("address").setText(getSensorDisplayName(data_[:macAddress]));
+      var addressView = View.findDrawableById("address") as WatchUi.Text;
+      addressView.setText(getSensorDisplayName(data_[:macAddress]));
     }
-    View.findDrawableById("humidity").setText(
-      getHumidityLabelText(data_[:humidityPercent]));
-    View.findDrawableById("temperature").setText(
-      getTemperatureLabelText(data_[:temperatureDegC]));
-    View.findDrawableById("pressure").setText(
-      getPressureLabelText(data_[:pressurePa]));
-    View.findDrawableById("acceleration").setText(
-      getAccelerationLabelText(data_[:accelerationMilliG]));
-    View.findDrawableById("voltage").setText(
-      getBatteryVoltageLabelText(data_[:batteryMilliVolts]));
-    View.findDrawableById("rssi").setText(
-      getRssiLabelText(data_[:rssiDbm]));
-    View.findDrawableById("latency").setText(getLatencyLabelText());
+
+    var humidityView = View.findDrawableById("humidity") as WatchUi.Text;
+    humidityView.setText(getHumidityLabelText(data_[:humidityPercent]));
+
+    var temperatureView = View.findDrawableById("temperature") as WatchUi.Text;
+    temperatureView.setText(getTemperatureLabelText(data_[:temperatureDegC]));
+
+    var pressureView = View.findDrawableById("pressure") as WatchUi.Text;
+    pressureView.setText(getPressureLabelText(data_[:pressurePa]));
+
+    var accelerationView = View.findDrawableById("acceleration") as WatchUi.Text;
+    accelerationView.setText(getAccelerationLabelText(data_[:accelerationMilliG]));
+
+    var voltageView = View.findDrawableById("voltage") as WatchUi.Text;
+    voltageView.setText(getBatteryVoltageLabelText(data_[:batteryMilliVolts]));
+
+    var rssiView = View.findDrawableById("rssi") as WatchUi.Text;
+    rssiView.setText(getRssiLabelText(data_[:rssiDbm]));
+
+    var latencyView = View.findDrawableById("latency") as WatchUi.Text;
+    latencyView.setText(getLatencyLabelText());
+
     if (showNextPageArrow_) {
       drawNextPageArrow(dc);
     }
